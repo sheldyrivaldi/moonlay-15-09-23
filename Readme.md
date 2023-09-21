@@ -30,3 +30,24 @@ Anda bisa menambahkan, menghapus atau mengganti database yang akan digunakan den
 Untuk menjalankan aplikasi bisa menggunakan command :
 
     go run main.go
+
+### 4. Testing
+
+Untuk testing dapat masuk ke folder app terlebih dahulu menggunakan command :
+
+    cd internal/app
+
+Lalu untuk menjalankan testing dapat menggunakan command :
+
+    go test ./... -cover
+
+Jika ingin melihat testing step by step dapat menggunakan command :
+
+    go test ./... -v -cover
+
+Contoh hasil nya seperti ini :
+
+    go test ./... -cover
+    ok      moonlay-todolist/internal/app/list      0.028s  coverage: 72.6% of statements
+    ok      moonlay-todolist/internal/app/sublist   0.027s  coverage: 71.8% of statements
+

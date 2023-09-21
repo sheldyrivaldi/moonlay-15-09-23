@@ -18,5 +18,5 @@ func Init(e *echo.Echo, f *factory.Factory) {
 
 	// routes api
 	list.NewHandler(f).Route(e.Group("/list"))
-	sublist.NewHandler(f).Route((e.Group("/list/sub")))
+	sublist.NewHandler(f).Route((e.Group("/list/:listID/sub")))
 }

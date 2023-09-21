@@ -31,7 +31,7 @@ func (l service) FindAll(payload *sublistdto.FindAllRequest) (*sublistdto.FindAl
 	var result *sublistdto.FindAllResponse
 	var data *[]model.SubList
 
-	data, info, err := l.Repository.FindAll(&payload.Description, &payload.Title, &payload.Pagination)
+	data, info, err := l.Repository.FindAll(&payload.ListID, &payload.Description, &payload.Title, &payload.Pagination)
 	if err != nil {
 		return result, errors.New("failed to find data")
 	}
@@ -47,7 +47,7 @@ func (l service) FindAll(payload *sublistdto.FindAllRequest) (*sublistdto.FindAl
 func (l service) FindByID(payload *sublistdto.FindByIDRequest) (*sublistdto.FindByIDResponse, error) {
 	var result *sublistdto.FindByIDResponse
 
-	data, err := l.Repository.FindByID(payload.ID)
+	data, err := l.Repository.FindByID(payload.ListID, payload.ID)
 	if err != nil {
 		return result, err
 	}
@@ -103,7 +103,7 @@ func (l service) UpdateByID(payload *sublistdto.UpdateByIDRequest, files []strin
 		list.Description = payload.Title
 	}
 
-	data, err := l.Repository.UpdateByID(payload.ID, list)
+	data, err := l.Repository.UpdateByID(payload.ListID, payload.ID, list)
 	if err != nil {
 		return result, err
 	}
@@ -136,7 +136,7 @@ func (l service) DeleteByID(payload *sublistdto.DeleteByIDRequest) (*sublistdto.
 		return result, errDel
 	}
 
-	data, err := l.Repository.DeleteByID(payload.ID)
+	data, err := l.Repository.DeleteByID(payload.ListID, payload.ID)
 	if err != nil {
 		return result, err
 	}

@@ -13,5 +13,5 @@ type SubList struct {
 type SubListFile struct {
 	abstraction.Entity
 	SubListID string `json:"sub_list_id" gorm:"foreignKey:SubListID"`
-	Link      string `json:"description"`
+	Link      string `json:"link"`
 }

@@ -59,6 +59,10 @@ func (h *handler) FindAll(c echo.Context) error {
 		payload.Description = c.QueryParam("description")
 	}
 
+	if c.Param("listID") != "" {
+		payload.ListID = c.Param("listID")
+	}
+
 	err := c.Bind(&payload)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
@@ -68,8 +72,8 @@ func (h *handler) FindAll(c echo.Context) error {
 		})
 	}
 
-	err = c.Validate(payload)
-	if err != nil {
+	err2 := c.Validate(payload)
+	if err2 != nil {
 		return c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
 			Code:    http.StatusBadRequest,
 			Status:  "Bad Request",
@@ -97,7 +101,9 @@ func (h handler) FindByID(c echo.Context) error {
 	payload := new(sublistdto.FindByIDRequest)
 
 	ID := c.Param("id")
+	ListID := c.Param("listID")
 	payload.ID = ID
+	payload.ListID = ListID
 
 	err := c.Bind(&payload)
 	if err != nil {
@@ -136,7 +142,7 @@ func (h handler) FindByID(c echo.Context) error {
 func (h handler) Create(c echo.Context) error {
 	payload := new(sublistdto.CreateRequest)
 
-	ListID := c.FormValue("list_id")
+	ListID := c.Param("listID")
 	title := c.FormValue("title")
 	description := c.FormValue("description")
 
@@ -175,9 +181,12 @@ func (h handler) UpdateByID(c echo.Context) error {
 	payloadData := new(sublistdto.FindByIDRequest)
 
 	ID := c.Param("id")
+	listID := c.Param("listID")
 
 	payload.ID = ID
+	payload.ListID = listID
 	payloadData.ID = ID
+	payloadData.ListID = listID
 
 	data, err := h.service.FindByID(payloadData)
 	if data == nil {
@@ -232,9 +241,12 @@ func (h handler) DeleteByID(c echo.Context) error {
 	payloadData := new(sublistdto.FindByIDRequest)
 
 	ID := c.Param("id")
+	listID := c.Param("listID")
 
 	payload.ID = ID
 	payloadData.ID = ID
+	payload.ListID = listID
+	payloadData.ListID = listID
 
 	data, err := h.service.FindByID(payloadData)
 	if data == nil {

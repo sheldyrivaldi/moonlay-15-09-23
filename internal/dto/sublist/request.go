@@ -7,12 +7,14 @@ import (
 
 type FindAllRequest struct {
 	abstraction.Pagination
+	ListID      string `validate:"required"`
 	Title       string
 	Description string
 }
 
 type FindByIDRequest struct {
-	ID string `param:"id" validate:"required"`
+	ListID string `param:"listID" validate:"required"`
+	ID     string `param:"id" validate:"required"`
 }
 
 type CreateRequest struct {
@@ -22,10 +24,12 @@ type CreateRequest struct {
 }
 
 type UpdateByIDRequest struct {
-	ID string `param:"id" validate:"required"`
+	ID     string `param:"id" validate:"required"`
+	ListID string `param:"listID" validate:"required"`
 	model.SubList
 }
 
 type DeleteByIDRequest struct {
-	ID string `param:"id" validate:"required"`
+	ID     string `param:"id" validate:"required"`
+	ListID string `param:"listID" validate:"required"`
 }

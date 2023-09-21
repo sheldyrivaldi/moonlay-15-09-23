@@ -67,25 +67,25 @@ func (_m *ISubListRepository) CreateFile(link string, subListID string) (*model.
 	return r0, r1
 }
 
-// DeleteByID provides a mock function with given fields: ID
-func (_m *ISubListRepository) DeleteByID(ID string) (*model.SubList, error) {
-	ret := _m.Called(ID)
+// DeleteByID provides a mock function with given fields: listID, ID
+func (_m *ISubListRepository) DeleteByID(listID string, ID string) (*model.SubList, error) {
+	ret := _m.Called(listID, ID)
 
 	var r0 *model.SubList
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string) (*model.SubList, error)); ok {
-		return rf(ID)
+	if rf, ok := ret.Get(0).(func(string, string) (*model.SubList, error)); ok {
+		return rf(listID, ID)
 	}
-	if rf, ok := ret.Get(0).(func(string) *model.SubList); ok {
-		r0 = rf(ID)
+	if rf, ok := ret.Get(0).(func(string, string) *model.SubList); ok {
+		r0 = rf(listID, ID)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.SubList)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(ID)
+	if rf, ok := ret.Get(1).(func(string, string) error); ok {
+		r1 = rf(listID, ID)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -107,34 +107,34 @@ func (_m *ISubListRepository) DeleteFileBySubListID(subListID string) error {
 	return r0
 }
 
-// FindAll provides a mock function with given fields: d, t, p
-func (_m *ISubListRepository) FindAll(d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error) {
-	ret := _m.Called(d, t, p)
+// FindAll provides a mock function with given fields: listID, d, t, p
+func (_m *ISubListRepository) FindAll(listID *string, d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error) {
+	ret := _m.Called(listID, d, t, p)
 
 	var r0 *[]model.SubList
 	var r1 *abstraction.PaginationInfo
 	var r2 error
-	if rf, ok := ret.Get(0).(func(*string, *string, *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error)); ok {
-		return rf(d, t, p)
+	if rf, ok := ret.Get(0).(func(*string, *string, *string, *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error)); ok {
+		return rf(listID, d, t, p)
 	}
-	if rf, ok := ret.Get(0).(func(*string, *string, *abstraction.Pagination) *[]model.SubList); ok {
-		r0 = rf(d, t, p)
+	if rf, ok := ret.Get(0).(func(*string, *string, *string, *abstraction.Pagination) *[]model.SubList); ok {
+		r0 = rf(listID, d, t, p)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*[]model.SubList)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*string, *string, *abstraction.Pagination) *abstraction.PaginationInfo); ok {
-		r1 = rf(d, t, p)
+	if rf, ok := ret.Get(1).(func(*string, *string, *string, *abstraction.Pagination) *abstraction.PaginationInfo); ok {
+		r1 = rf(listID, d, t, p)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(*abstraction.PaginationInfo)
 		}
 	}
 
-	if rf, ok := ret.Get(2).(func(*string, *string, *abstraction.Pagination) error); ok {
-		r2 = rf(d, t, p)
+	if rf, ok := ret.Get(2).(func(*string, *string, *string, *abstraction.Pagination) error); ok {
+		r2 = rf(listID, d, t, p)
 	} else {
 		r2 = ret.Error(2)
 	}
@@ -142,25 +142,25 @@ func (_m *ISubListRepository) FindAll(d *string, t *string, p *abstraction.Pagin
 	return r0, r1, r2
 }
 
-// FindByID provides a mock function with given fields: ID
-func (_m *ISubListRepository) FindByID(ID string) (*model.SubList, error) {
-	ret := _m.Called(ID)
+// FindByID provides a mock function with given fields: listID, ID
+func (_m *ISubListRepository) FindByID(listID string, ID string) (*model.SubList, error) {
+	ret := _m.Called(listID, ID)
 
 	var r0 *model.SubList
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string) (*model.SubList, error)); ok {
-		return rf(ID)
+	if rf, ok := ret.Get(0).(func(string, string) (*model.SubList, error)); ok {
+		return rf(listID, ID)
 	}
-	if rf, ok := ret.Get(0).(func(string) *model.SubList); ok {
-		r0 = rf(ID)
+	if rf, ok := ret.Get(0).(func(string, string) *model.SubList); ok {
+		r0 = rf(listID, ID)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.SubList)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(ID)
+	if rf, ok := ret.Get(1).(func(string, string) error); ok {
+		r1 = rf(listID, ID)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -168,25 +168,25 @@ func (_m *ISubListRepository) FindByID(ID string) (*model.SubList, error) {
 	return r0, r1
 }
 
-// UpdateByID provides a mock function with given fields: ID, data
-func (_m *ISubListRepository) UpdateByID(ID string, data *model.SubList) (*model.SubList, error) {
-	ret := _m.Called(ID, data)
+// UpdateByID provides a mock function with given fields: listID, ID, data
+func (_m *ISubListRepository) UpdateByID(listID string, ID string, data *model.SubList) (*model.SubList, error) {
+	ret := _m.Called(listID, ID, data)
 
 	var r0 *model.SubList
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string, *model.SubList) (*model.SubList, error)); ok {
-		return rf(ID, data)
+	if rf, ok := ret.Get(0).(func(string, string, *model.SubList) (*model.SubList, error)); ok {
+		return rf(listID, ID, data)
 	}
-	if rf, ok := ret.Get(0).(func(string, *model.SubList) *model.SubList); ok {
-		r0 = rf(ID, data)
+	if rf, ok := ret.Get(0).(func(string, string, *model.SubList) *model.SubList); ok {
+		r0 = rf(listID, ID, data)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.SubList)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string, *model.SubList) error); ok {
-		r1 = rf(ID, data)
+	if rf, ok := ret.Get(1).(func(string, string, *model.SubList) error); ok {
+		r1 = rf(listID, ID, data)
 	} else {
 		r1 = ret.Error(1)
 	}

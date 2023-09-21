@@ -10,12 +10,12 @@ import (
 )
 
 type ISubListRepository interface {
-	FindAll(d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error)
-	FindByID(ID string) (*model.SubList, error)
+	FindAll(listID *string, d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error)
+	FindByID(listID string, ID string) (*model.SubList, error)
 	Create(data *model.SubList) (*model.SubList, error)
 	CreateFile(link string, subListID string) (*model.SubListFile, error)
-	UpdateByID(ID string, data *model.SubList) (*model.SubList, error)
-	DeleteByID(ID string) (*model.SubList, error)
+	UpdateByID(listID string, ID string, data *model.SubList) (*model.SubList, error)
+	DeleteByID(listID, ID string) (*model.SubList, error)
 	DeleteFileBySubListID(subListID string) error
 }
 
@@ -27,7 +27,7 @@ func NewSubListRepository(db *gorm.DB) *SubListRepository {
 	return &SubListRepository{db}
 }
 
-func (r *SubListRepository) FindAll(d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error) {
+func (r *SubListRepository) FindAll(listID *string, d *string, t *string, p *abstraction.Pagination) (*[]model.SubList, *abstraction.PaginationInfo, error) {
 	var datas []model.SubList
 	var info abstraction.PaginationInfo
 
@@ -73,7 +73,7 @@ func (r *SubListRepository) FindAll(d *string, t *string, p *abstraction.Paginat
 		query = query.Where("description LIKE ?", "%"+*d+"%")
 	}
 
-	err := query.Preload("Files").Find(&datas).Error
+	err := query.Where("list_id = ?", &listID).Preload("Files").Find(&datas).Error
 
 	if err != nil {
 		return &datas, &info, err
@@ -90,10 +90,10 @@ func (r *SubListRepository) FindAll(d *string, t *string, p *abstraction.Paginat
 	return &datas, &info, nil
 }
 
-func (r *SubListRepository) FindByID(ID string) (*model.SubList, error) {
+func (r *SubListRepository) FindByID(listID string, ID string) (*model.SubList, error) {
 	var data *model.SubList
 
-	err := r.db.Preload("Files").Where("id = ?", ID).First(&data).Error
+	err := r.db.Preload("Files").Where("list_id = ?", listID).Where("id = ?", ID).First(&data).Error
 
 	if err != nil {
 		return nil, err
@@ -117,31 +117,31 @@ func (r *SubListRepository) Create(data *model.SubList) (*model.SubList, error) 
 	return data, nil
 }
 
-func (r *SubListRepository) UpdateByID(ID string, data *model.SubList) (*model.SubList, error) {
-	var list model.SubList
-	err := r.db.Preload("Files").Where("id = ?", ID).First(&list).Error
+func (r *SubListRepository) UpdateByID(listID string, ID string, data *model.SubList) (*model.SubList, error) {
+	var sublist model.SubList
+	err := r.db.Preload("Files").Where("list_id = ?", listID).Where("id = ?", ID).First(&sublist).Error
 	if err != nil {
 		return nil, err
 	}
 
 	if data.Title != "" {
-		list.Title = data.Title
+		sublist.Title = data.Title
 	}
 	if data.Description != "" {
-		list.Description = data.Description
+		sublist.Description = data.Description
 	}
 
-	err = r.db.Save(&list).Error
+	err = r.db.Save(&sublist).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return &list, nil
+	return &sublist, nil
 }
 
-func (r *SubListRepository) DeleteByID(ID string) (*model.SubList, error) {
+func (r *SubListRepository) DeleteByID(listID, ID string) (*model.SubList, error) {
 	var data *model.SubList
-	err := r.db.Preload("Files").Where("id = ?", ID).First(&data).Error
+	err := r.db.Preload("Files").Where("list_id = ?", listID).Where("id = ?", ID).First(&data).Error
 	if err != nil {
 		return nil, err
 	}
